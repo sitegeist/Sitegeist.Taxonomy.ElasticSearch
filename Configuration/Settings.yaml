@@ -1,0 +1,8 @@
+Neos:
+  ContentRepository:
+    Search:
+      defaultContext:
+        TaxonomyIndexing: Sitegeist\Taxonomy\ElasticSearch\Eel\TaxonomyIndexingHelper
+  Fusion:
+    defaultContext:
+      TaxonomySearch: Sitegeist\Taxonomy\ElasticSearch\Eel\TaxonomySearchHelper
