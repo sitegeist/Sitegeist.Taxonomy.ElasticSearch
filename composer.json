@@ -1,0 +1,20 @@
+{
+    "description": "",
+    "type": "neos-package",
+    "name": "sitegeist/taxonomy-elasticsearch",
+    "require": {
+        "neos/content-repository": "*",
+        "neos/fusion": "*",
+        "sitegeist/taxonomy": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sitegeist\\Taxonomy\\ElasticSearch\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Sitegeist.Taxonomy.ElasticSearch"
+        }
+    }
+}
