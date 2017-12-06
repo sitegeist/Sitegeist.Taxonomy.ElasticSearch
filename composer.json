@@ -3,9 +3,8 @@
     "type": "neos-package",
     "name": "sitegeist/taxonomy-elasticsearch",
     "require": {
-        "flowpack/elasticsearch-contentrepositoryadaptor": "*",
-        "neos/fusion": "*",
-        "sitegeist/taxonomy": "*"
+        "sitegeist/taxonomy": "*",
+        "flowpack/elasticsearch-contentrepositoryadaptor": "*"
     },
     "autoload": {
         "psr-4": {
