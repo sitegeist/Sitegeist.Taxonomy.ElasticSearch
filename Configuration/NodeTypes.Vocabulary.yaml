@@ -1,4 +1,4 @@
-Sitegeist.Taxonomy:Mixin.Properties:
+Sitegeist.Taxonomy:Vocabulary:
   search:
     fulltext:
       isRoot: TRUE
