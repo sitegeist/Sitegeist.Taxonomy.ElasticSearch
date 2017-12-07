@@ -24,7 +24,7 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
         foreach ($taxonomies as $taxonomy) {
             $pathPrefixes[] = $taxonomy->getIdentifier();
             $parent = $taxonomy->getParent();
-            while ($parent && $parent->getNodeType()->isOfType('Sitegeist.Taxonomy:Taxonomy')) {
+            while ($parent && $parent->getNodeType()->isOfType(\Sitegeist\Taxonomy\Package::TAXONOMY_NODE_TYPE)) {
                 $pathPrefixes[] = $parent->getIdentifier();
                 $parent = $parent->getParent();
             }

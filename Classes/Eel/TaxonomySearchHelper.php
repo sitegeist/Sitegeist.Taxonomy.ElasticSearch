@@ -37,7 +37,7 @@ class TaxonomySearchHelper extends ElasticSearchQueryBuilder
     {
         // create and execute a search for taxonimies first
         $subQueryBuilder = new ElasticSearchQueryBuilder();
-        $taxonomyQueryResults = $subQueryBuilder->query($this->taxonomyService->getRootNode())
+        $taxonomyQueryResults = $subQueryBuilder->query($this->taxonomyService->getRoot())
             ->fulltext($searchWord)
             ->nodeType(\Sitegeist\Taxonomy\Package::TAXONOMY_NODE_TYPE)
             ->execute()
