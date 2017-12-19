@@ -2,19 +2,24 @@
 namespace Sitegeist\Taxonomy\ElasticSearch\Eel;
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Eel\FlowQuery\FlowQuery;
 use Neos\ContentRepository\Domain\Model\NodeInterface;
 use Sitegeist\Taxonomy\Service\TaxonomyService;
-use Neos\Neos\Domain\Service\ContentContext;
 use Neos\Eel\ProtectedContextAwareInterface;
 
 class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
 {
 
     /**
+     * @var TaxonomyService
+     * @Flow\Inject
+     */
+    protected $taxonomyService;
+
+    /**
      * @param NodeInterface[] $taxonomies
      */
-    public function buildIdentifierList($taxonomies) {
+    public function buildIdentifierList($taxonomies)
+    {
 
         if (!$taxonomies) {
             return [];
@@ -24,7 +29,7 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
         foreach ($taxonomies as $taxonomy) {
             $pathPrefixes[] = $taxonomy->getIdentifier();
             $parent = $taxonomy->getParent();
-            while ($parent && $parent->getNodeType()->isOfType(\Sitegeist\Taxonomy\Package::TAXONOMY_NODE_TYPE)) {
+            while ($parent && $parent->getNodeType()->isOfType($this->taxonomyService->getTaxonomyNodeType())) {
                 $pathPrefixes[] = $parent->getIdentifier();
                 $parent = $parent->getParent();
             }

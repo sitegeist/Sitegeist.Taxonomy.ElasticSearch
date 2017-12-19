@@ -22,7 +22,8 @@ class TaxonomySearchHelper extends ElasticSearchQueryBuilder
      * @param string $taxonomyProperty
      * @return QueryBuilderInterface
      */
-    public function taxonomyProperty($taxonomyProperty) {
+    public function taxonomyProperty($taxonomyProperty)
+    {
         $this->taxonomyProperty = $taxonomyProperty;
         return $this;
     }
@@ -39,7 +40,7 @@ class TaxonomySearchHelper extends ElasticSearchQueryBuilder
         $subQueryBuilder = new ElasticSearchQueryBuilder();
         $taxonomyQueryResults = $subQueryBuilder->query($this->taxonomyService->getRoot())
             ->fulltext($searchWord)
-            ->nodeType(\Sitegeist\Taxonomy\Package::TAXONOMY_NODE_TYPE)
+            ->nodeType($this->taxonomyService->getTaxonomyNodeType())
             ->execute()
             ->toArray();
 
@@ -60,7 +61,9 @@ class TaxonomySearchHelper extends ElasticSearchQueryBuilder
                         [
                             'terms' => [
                                 $this->taxonomyProperty => array_map(
-                                    function($taxonomyQueryResult) { return $taxonomyQueryResult->getIdentifier(); },
+                                    function ($taxonomyQueryResult) {
+                                        return $taxonomyQueryResult->getIdentifier();
+                                    },
                                     $taxonomyQueryResults
                                 )
                             ]
