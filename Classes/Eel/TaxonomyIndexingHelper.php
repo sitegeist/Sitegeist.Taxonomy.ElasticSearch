@@ -20,10 +20,10 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
      */
     public function buildIdentifierList($taxonomies)
     {
-
         if (!$taxonomies) {
             return [];
         }
+
         $pathPrefixes = [];
 
         foreach ($taxonomies as $taxonomy) {
