@@ -16,26 +16,59 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
     protected $taxonomyService;
 
     /**
-     * @param NodeInterface[] $taxonomies
+     * @param NodeInterface|NodeInterface[] $taxonomies
+     * @return array
      */
-    public function buildIdentifierList($taxonomies)
+    public function extractPathAndParentPathes($taxonomies)
     {
         if (!$taxonomies) {
             return [];
         }
 
-        $pathPrefixes = [];
+        if ($taxonomies instanceof NodeInterface) {
+            $taxonomies = [$taxonomies];
+        }
+
+        $pathes = [];
 
         foreach ($taxonomies as $taxonomy) {
-            $pathPrefixes[] = $taxonomy->getIdentifier();
+            $pathes[] = $taxonomy->getPath();
             $parent = $taxonomy->getParent();
             while ($parent && $parent->getNodeType()->isOfType($this->taxonomyService->getTaxonomyNodeType())) {
-                $pathPrefixes[] = $parent->getIdentifier();
+                $pathes[] = $parent->getPath();
                 $parent = $parent->getParent();
             }
         }
 
-        return array_unique($pathPrefixes);
+        return array_unique($pathes);
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[] $taxonomies
+     * @return array
+     */
+    public function extractIdentifierAndParentIdentifiers($taxonomies)
+    {
+        if (!$taxonomies) {
+            return [];
+        }
+
+        if ($taxonomies instanceof NodeInterface) {
+            $taxonomies = [$taxonomies];
+        }
+
+        $identifiers = [];
+
+        foreach ($taxonomies as $taxonomy) {
+            $identifiers[] = $taxonomy->getIdentifier();
+            $parent = $taxonomy->getParent();
+            while ($parent && $parent->getNodeType()->isOfType($this->taxonomyService->getTaxonomyNodeType())) {
+                $identifiers[] = $parent->getIdentifier();
+                $parent = $parent->getParent();
+            }
+        }
+
+        return array_unique($identifiers);
     }
 
     /**

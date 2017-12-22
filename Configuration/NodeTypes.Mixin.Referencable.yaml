@@ -5,4 +5,4 @@ Sitegeist.Taxonomy:Mixin.Referencable:
         elasticSearchMapping:
           type: string # an array of strings, to be precise
           index: not_analyzed
-        indexing: '${TaxonomyIndexing.buildIdentifierList(value)}'
+        indexing: '${TaxonomyIndexing.extractIdentifierAndParentIdentifiers(value)}'
