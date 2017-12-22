@@ -2,6 +2,7 @@
     "description": "",
     "type": "neos-package",
     "name": "sitegeist/taxonomy-elasticsearch",
+    "license": "GPL-3.0+",
     "require": {
         "sitegeist/taxonomy": "*",
         "flowpack/elasticsearch-contentrepositoryadaptor": "*"
