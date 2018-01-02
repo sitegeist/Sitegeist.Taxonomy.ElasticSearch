@@ -19,7 +19,7 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
      * @param NodeInterface|NodeInterface[] $taxonomies
      * @return array
      */
-    public function extractPathAndParentPathes($taxonomies)
+    public function extractPathAndParentPaths($taxonomies)
     {
         if (!$taxonomies) {
             return [];

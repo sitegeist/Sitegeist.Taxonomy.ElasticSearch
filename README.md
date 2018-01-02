@@ -18,7 +18,7 @@ of taxonomies.
 
 ### TaxonomyIndexing
 
-- `TaxonomyIndexing.extractPathAndParentPathes()` Get an array of taxons-pathes including all parent-taxons for the given taxons-nodes.
+- `TaxonomyIndexing.extractPathAndParentPaths()` Get an array of taxons-pathes including all parent-taxons for the given taxons-nodes.
 - `TaxonomyIndexing.extractIdentifierAndParentIdentifiers()` Get an array of taxons-identifiers including ass all parent-taxons for the given taxons-nodes..
 
 ### TaxonomySearch 
