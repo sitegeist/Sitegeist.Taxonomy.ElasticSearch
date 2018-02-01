@@ -26,15 +26,17 @@ configurations. It also provides an EEL helper for taxonomy-aware elastic search
 
 ### TaxonomySearch
 
-This is an extended version of the search helper from `Flowpack.ElasticSearch.ContentRepositoryAdaptor` that takes
-taxonomies into account.
+@todo ATTENTION PSEUDOCODE FIX THIS SOONISH
+```
+// the query
+term = 'foo'
 
-- `TaxonomySearch.taxonomyProperty()` Define the property that contains the references to the taxonomies default
-  is 'taxonomyReferences'
-- `TaxonomySearch.taxonomyStartingPoint()` Define the path inside taxonomies to search like '/animals/mammals',
-  by default all taxonomies are used.
-- `TaxonomySearch.fulltext()` Do a fulltext-query to the taxonomies and afterwards query for fulltext matches or
-  relations to the previously found taxonomies.
+// taxonomy nodes
+taxonomies = ${Search.query( Taxonomy.root() ).fulltext(this.term).execute()}
+
+// documents that either match fulltext or are assigned to a taxon that matched
+searchQuery = ${Search.query(site).request('query.filtered.query.bool.should', [{'query_string': {'query': this.term}}, {'terms': {'taxonomyReferences': this.taxonomies}}]).nodeType('Neos.Neos:Document')}
+```
 
 ## Indexing of Taxonomies
 
