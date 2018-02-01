@@ -3,3 +3,13 @@ Neos:
     Search:
       defaultContext:
         TaxonomyIndexing: Sitegeist\Taxonomy\ElasticSearch\Eel\TaxonomyIndexingHelper
+
+Sitegeist:
+  Silhouettes:
+    properties:
+      taxonomyReferences:
+        search:
+          elasticSearchMapping:
+            type: string # an array of strings, to be precise
+            index: not_analyzed
+          indexing: '${TaxonomyIndexing.extractIdentifierAndParentIdentifiers(value)}'

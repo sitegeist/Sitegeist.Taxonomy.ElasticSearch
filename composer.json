@@ -7,6 +7,9 @@
         "sitegeist/taxonomy": "*",
         "flowpack/elasticsearch-contentrepositoryadaptor": "*"
     },
+    "suggest": {
+        "sitegeist/silhouettes": "^1.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Sitegeist\\Taxonomy\\ElasticSearch\\": "Classes/"
