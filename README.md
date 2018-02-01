@@ -26,16 +26,52 @@ configurations. It also provides an EEL helper for taxonomy-aware elastic search
 
 ### TaxonomySearch
 
-@todo ATTENTION PSEUDOCODE FIX THIS SOONISH
+Find taxonomies that match the fulltext query.
+
 ```
-// the query
-term = 'foo'
+# Build searchQuery
+searchQuery = ${Search.query( Taxonomy.root() ).fulltext( searchTerm ).nodeType('Sitegeist.Taxonomy:Taxonomy')}
 
-// taxonomy nodes
-taxonomies = ${Search.query( Taxonomy.root() ).fulltext(this.term).execute()}
+# Number of serach results
+totalSearchResults = ${this.searchQuery.count()}
 
-// documents that either match fulltext or are assigned to a taxon that matched
-searchQuery = ${Search.query(site).request('query.filtered.query.bool.should', [{'query_string': {'query': this.term}}, {'terms': {'taxonomyReferences': this.taxonomies}}]).nodeType('Neos.Neos:Document')}
+# Execute query
+searchResults = ${this.searchQuery.execute()}
+```
+
+Often you want to combine the search for taxons with the document serach.
+This examples will find results that match the term via fulltext or that
+are referencing a taxonomies that matched the fulltext.
+
+```
+# Array with IDs of taxonomies that match the term
+@context.taxonomyIds = ${this.taxonomies}
+@context.taxonomyIds.@process.convertToIds = Neos.Fusion:RawCollection {
+    collection = ${Search.query( Taxonomy.root() ).fulltext( searchTerm ).nodeType('Sitegeist.Taxonomy:Taxonomy').execute().toArray()}
+    itemName = 'taxon'
+    itemRenderer = ${q(taxon).property('_identifier')}
+}
+
+# Find documents that either match fulltext or are assigned to a taxon that matched
+
+# Build searchQuery
+searchQuery = ${Search.query(site).nodeType('Neos.Neos:Document').limit(100)}
+
+# Append setting to get results with a minimum match of 1
+searchQuery.@process.setMinimumShouldMatch = ${value.request('query.filtered.query.bool.minimum_should_match', 1)}
+
+# Append query with fulltext string search term
+searchQuery.@process.setTermCondition = ${value.request('query.filtered.query.bool.should', [{'query_string': {'query': searchTerm}}])}
+
+# Append query with search by taxonomy (if any)
+searchQuery.@process.setTaxonomyCondition = ${value.appendAtPath('query.filtered.query.bool.should', {'terms': {'taxonomyReferences':taxonomyIds}})}
+searchQuery.@process.setTaxonomyCondition.@if.has = ${taxonomyIds ? true : false}
+
+# Number of serach results
+totalSearchResults = ${this.searchQuery.count()}
+
+# Execute query
+searchResults = ${this.searchQuery.execute()}
 ```
 
 ## Indexing of Taxonomies
