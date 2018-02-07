@@ -19,8 +19,6 @@ configurations. It also provides an EEL helper for taxonomy-aware elastic search
 
 ### TaxonomyIndexing
 
-- `TaxonomyIndexing.extractPathAndParentPaths()` Get an array of taxon paths including all parent taxons for the given
-  taxon nodes
 - `TaxonomyIndexing.extractIdentifierAndParentIdentifiers()` Get an array of taxon identifiers including all parent
   taxons for the given taxon nodes
 

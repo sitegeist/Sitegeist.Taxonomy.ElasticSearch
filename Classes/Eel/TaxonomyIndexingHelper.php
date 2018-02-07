@@ -19,36 +19,9 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
      * @param NodeInterface|NodeInterface[] $taxonomies
      * @return array
      */
-    public function extractPathAndParentPaths($taxonomies)
-    {
-        if (!$taxonomies) {
-            return [];
-        }
-
-        if ($taxonomies instanceof NodeInterface) {
-            $taxonomies = [$taxonomies];
-        }
-
-        $pathes = [];
-
-        foreach ($taxonomies as $taxonomy) {
-            $pathes[] = $taxonomy->getPath();
-            $parent = $taxonomy->getParent();
-            while ($parent && $parent->getNodeType()->isOfType($this->taxonomyService->getTaxonomyNodeType())) {
-                $pathes[] = $parent->getPath();
-                $parent = $parent->getParent();
-            }
-        }
-
-        return array_unique($pathes);
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[] $taxonomies
-     * @return array
-     */
     public function extractIdentifierAndParentIdentifiers($taxonomies)
     {
+
         if (!$taxonomies) {
             return [];
         }
@@ -58,13 +31,16 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
         }
 
         $identifiers = [];
+        $taxonomyNodeType = $this->taxonomyService->getTaxonomyNodeType();
 
         foreach ($taxonomies as $taxonomy) {
-            $identifiers[] = $taxonomy->getIdentifier();
-            $parent = $taxonomy->getParent();
-            while ($parent && $parent->getNodeType()->isOfType($this->taxonomyService->getTaxonomyNodeType())) {
-                $identifiers[] = $parent->getIdentifier();
-                $parent = $parent->getParent();
+            if (($taxonomy instanceof NodeInterface) && $taxonomy->getNodeType()->isOfType($taxonomyNodeType)) {
+                $identifiers[] = $taxonomy->getIdentifier();
+                $parent = $taxonomy->getParent();
+                while ($parent && ($parent instanceof NodeInterface) && $parent->getNodeType()->isOfType($taxonomyNodeType)) {
+                    $identifiers[] = $parent->getIdentifier();
+                    $parent = $parent->getParent();
+                }
             }
         }
 
