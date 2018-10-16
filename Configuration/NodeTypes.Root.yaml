@@ -1,0 +1,4 @@
+Sitegeist.Taxonomy:Root:
+  search:
+    fulltext:
+      isRoot: TRUE
