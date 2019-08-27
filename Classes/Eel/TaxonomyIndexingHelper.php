@@ -35,16 +35,18 @@ class TaxonomyIndexingHelper implements ProtectedContextAwareInterface
 
         foreach ($taxonomies as $taxonomy) {
             if (($taxonomy instanceof NodeInterface) && $taxonomy->getNodeType()->isOfType($taxonomyNodeType)) {
-                $identifiers[] = $taxonomy->getIdentifier();
+                $identifier = (string) $taxonomy->getNodeAggregateIdentifier();
+                $identifiers[$identifier] = $identifier;
                 $parent = $taxonomy->getParent();
                 while ($parent && ($parent instanceof NodeInterface) && $parent->getNodeType()->isOfType($taxonomyNodeType)) {
-                    $identifiers[] = $parent->getIdentifier();
+                    $identifier = (string) $parent->getNodeAggregateIdentifier();
+                    $identifiers[$identifier] = $identifier;
                     $parent = $parent->getParent();
                 }
             }
         }
 
-        return array_unique($identifiers);
+        return array_keys($identifiers);
     }
 
     /**
