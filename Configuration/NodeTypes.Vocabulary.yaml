@@ -8,13 +8,13 @@ Sitegeist.Taxonomy:Vocabulary:
       search:
         fulltextExtractor: ${Indexing.extractInto('h1', value)}
         elasticSearchMapping:
-          type: string
-          include_in_all: true
+          type: keyword
+          # include_in_all: true
 
     description:
       search:
         fulltextExtractor: ${Indexing.extractInto('text', value)}
         elasticSearchMapping:
-          type: string
-          include_in_all: true
+          type: keyword
+          # include_in_all: true
 
