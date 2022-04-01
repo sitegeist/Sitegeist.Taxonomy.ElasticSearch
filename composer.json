@@ -4,7 +4,7 @@
     "name": "sitegeist/taxonomy-elasticsearch",
     "license": "GPL-3.0+",
     "require": {
-        "neos/content-repository" : "~5.0 || ~7.0 || dev-master",
+        "neos/content-repository" : "~5.0 || ~7.0 || ~8.0 || dev-master",
         "sitegeist/taxonomy": "*",
         "flowpack/elasticsearch-contentrepositoryadaptor": "*"
     },
